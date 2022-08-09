@@ -64,6 +64,33 @@ describe("kudos-program", () => {
     console.log(res)
   });
 
+  it("Error if someone tries to send themselves kudos", async () => {
+    // Create a PDA
+    const [userStatsPDA, pda_bump] = await PublicKey.findProgramAddress(
+      [ anchor.utils.bytes.utf8.encode("user-stats"),
+        userWallet.publicKey.toBuffer() ],
+        program.programId
+    )
+
+    // Add your test here.
+    const tx = await program.methods
+        .giveKudos(new anchor.BN(20))
+        .accounts({
+          kudosSender: userWallet.publicKey,
+          kudosReceiver: userWallet.publicKey,
+          userStats: userStatsPDA
+        })
+        .signers([userWallet])
+        .rpc()
+        .catch((err) => {
+          console.log(err);
+          // No need to do anything
+        });
+    console.log("Your transaction signature", tx);
+    const res = await program.account.userStats.fetch(userStatsPDA);
+    console.log(res)
+  });
+
   it("Error if too many Kudos given at once", async () => {
     // Create a PDA
     const [userStatsPDA, pda_bump] = await PublicKey.findProgramAddress(
