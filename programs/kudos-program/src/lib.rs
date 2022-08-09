@@ -2,6 +2,8 @@ use anchor_lang::prelude::*;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
+const SEED_PHRASE: &[u8] = b"user-stats";
+
 #[program]
 pub mod kudos_program {
     use anchor_lang::solana_program::entrypoint::ProgramResult;
@@ -54,7 +56,7 @@ pub struct CreateUserStats<'info> {
         init,
         payer = user,
         space = 8 + 64 + 8 + 1,
-        seeds = [b"user-stats", user.key().as_ref()],
+        seeds = [SEED_PHRASE, user.key().as_ref()],
         bump
     )]
     pub user_stats: Account<'info, UserStats>,
@@ -71,7 +73,7 @@ pub struct GiveKudos<'info> {
 
     #[account(
         mut,
-        seeds = [b"user-stats", kudos_receiver.key().as_ref()],
+        seeds = [SEED_PHRASE, kudos_receiver.key().as_ref()],
         bump = user_stats.bump
     )]
     pub user_stats: Account<'info, UserStats>,
