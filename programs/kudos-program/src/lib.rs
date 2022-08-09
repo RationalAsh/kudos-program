@@ -4,6 +4,8 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
 #[program]
 pub mod kudos_program {
+    use anchor_lang::solana_program::entrypoint::ProgramResult;
+
     use super::*;
 
     pub fn create_user_stats(ctx: Context<CreateUserStats>, name: String, pda_bump: u8) -> Result<()> {
@@ -20,10 +22,15 @@ pub mod kudos_program {
         Ok(())
     }
 
-    pub fn give_kudos(ctx: Context<GiveKudos>, amount: u64) -> Result<()> {
-        ctx.accounts.user_stats.kudos += amount;
+    pub fn give_kudos(ctx: Context<GiveKudos>, amount: u64) -> ProgramResult {
+        if amount > 10 {
+            msg!("Given Kudos too high!! > 10");
+            Err(ProgramError::InvalidInstructionData)
+        } else {
+            ctx.accounts.user_stats.kudos += amount;
 
-        Ok(())
+            Ok(())
+        }
     }
 }
 
