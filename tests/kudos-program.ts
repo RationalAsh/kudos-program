@@ -181,4 +181,19 @@ describe("kudos-program", () => {
     console.log(res1);
     console.log(res2);
   });
+
+  it("Checking if PDAs can be found.", async () => {
+    const paccs = await provider.connection.getProgramAccounts(
+      new PublicKey("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS")
+    )
+    paccs?.forEach((item, index) => {
+      console.log("----------------");
+      console.log("Account %d", 1);
+      console.log("----------------");
+      console.log("Address : ", item.pubkey.toBase58());
+      console.log("Owner   : ", item.account.owner.toBase58());
+      console.log("Data    : %d bytes.", item.account.data.length);
+      console.log("----------------\n");
+    })
+  })
 });
