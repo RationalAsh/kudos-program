@@ -12,7 +12,7 @@ kudos_program = "FrR535wDsm4PUEU41ipJRMWYJj4bMoQX6GPqiKfQdgzU"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "devnet"
+cluster = "localnet"
 wallet = "/Users/ashwin/.config/solana/id.json"
 
 [scripts]
