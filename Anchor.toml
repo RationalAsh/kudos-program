@@ -1,7 +1,11 @@
 [features]
 seeds = false
 skip-lint = false
+
 [programs.localnet]
+kudos_program = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+
+[programs.devnet]
 kudos_program = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
 
 [registry]

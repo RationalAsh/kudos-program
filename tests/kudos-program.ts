@@ -19,7 +19,7 @@ describe("kudos-program", () => {
   const kps = fs.readFileSync("/Users/ashwin/.config/solana/id.json", {encoding: 'utf-8'});
   const kpb = Buffer.from(JSON.parse(kps));
   const userWallet = Keypair.fromSecretKey(kpb);
-
+ 
   // Coleague's wallet
   const colleagueWallet = Keypair.generate();
 
@@ -199,5 +199,7 @@ describe("kudos-program", () => {
 
       assert.ok(item.account.owner.toBase58() === programAddress.toBase58());
     })
+
+    assert.ok(paccs.length === 2);
   })
 });
