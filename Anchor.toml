@@ -3,16 +3,16 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-kudos_program = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+kudos_program = "FrR535wDsm4PUEU41ipJRMWYJj4bMoQX6GPqiKfQdgzU"
 
 [programs.devnet]
-kudos_program = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+kudos_program = "FrR535wDsm4PUEU41ipJRMWYJj4bMoQX6GPqiKfQdgzU"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "/Users/ashwin/.config/solana/id.json"
 
 [scripts]

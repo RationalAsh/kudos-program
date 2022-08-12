@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("FrR535wDsm4PUEU41ipJRMWYJj4bMoQX6GPqiKfQdgzU");
 
 const SEED_PHRASE: &[u8] = b"kudos-stats";
 
