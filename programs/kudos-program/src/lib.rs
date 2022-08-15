@@ -7,8 +7,6 @@ pub mod state;
 
 declare_id!("FrR535wDsm4PUEU41ipJRMWYJj4bMoQX6GPqiKfQdgzU");
 
-const SEED_PHRASE: &[u8] = b"kudos-stats";
-
 #[program]
 pub mod kudos_program {
     use anchor_lang::solana_program::entrypoint::ProgramResult;
@@ -21,12 +19,18 @@ pub mod kudos_program {
         if name.as_bytes().len() > 200 {
             panic!();
         }
-
-        user_stats.name = name;
-        user_stats.kudos_received = 0;
-        user_stats.kudos_given = 0;
-        user_stats.bump = pda_bump;
-        user_stats.public_key = *ctx.accounts.user.key;
+        user_stats.init_user_stats(
+            name,
+            *ctx.accounts.user.key,
+            0,
+            0,
+            pda_bump
+        );
+        // user_stats.name = name;
+        // user_stats.kudos_received = 0;
+        // user_stats.kudos_given = 0;
+        // user_stats.bump = pda_bump;
+        // user_stats.public_key = *ctx.accounts.user.key;
         
         Ok(())
     }
