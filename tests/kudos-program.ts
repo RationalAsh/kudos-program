@@ -85,6 +85,28 @@ describe("kudos-program", () => {
     console.log(res)
   });
 
+  it("User updates their name.", async () => {
+    // Create a PDA
+    const [senderStatsPDA, pda_bump_sender] = await PublicKey.findProgramAddress(
+      [ anchor.utils.bytes.utf8.encode(SEED_PHRASE),
+        colleagueWallet.publicKey.toBuffer() ],
+        program.programId
+    )
+
+    // Add your test here.
+    const tx = await program.methods
+        .updateName("The sender's new name!")
+        .accounts({
+          user: colleagueWallet.publicKey,
+          userStats: senderStatsPDA
+        })
+        .signers([colleagueWallet])
+        .rpc();
+    console.log("Your transaction signature", tx);
+    const res = await program.account.userStats.fetch(senderStatsPDA);
+    console.log(res)
+  });
+
   it("Give Kudos", async () => {
     // Create a PDA
     const [userStatsPDA, pda_bump_user] = await PublicKey.findProgramAddress(

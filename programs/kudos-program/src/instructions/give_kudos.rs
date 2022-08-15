@@ -23,7 +23,8 @@ pub struct GiveKudos<'info> {
     #[account(
         mut,
         seeds = [SEED_PHRASE, kudos_sender.key().as_ref()],
-        bump = sender_stats.bump
+        bump = sender_stats.bump,
+        constraint = sender_stats.public_key != receiver_stats.public_key
     )]
     pub sender_stats: Account<'info, UserStats>,
 }
