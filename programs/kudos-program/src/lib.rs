@@ -55,7 +55,7 @@ pub struct CreateUserStats<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
     
-    // Space: 8 discriminator 
+    // Space:   8 discriminator 
     //        + 64 name
     //        + 32 public key 
     //        + 8 kudos tx 
