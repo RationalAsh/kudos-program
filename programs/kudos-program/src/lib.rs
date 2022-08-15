@@ -1,5 +1,10 @@
 use anchor_lang::prelude::*;
 
+pub use instructions::*;
+
+pub mod instructions;
+pub mod state;
+
 declare_id!("FrR535wDsm4PUEU41ipJRMWYJj4bMoQX6GPqiKfQdgzU");
 
 const SEED_PHRASE: &[u8] = b"kudos-stats";
@@ -36,64 +41,4 @@ pub mod kudos_program {
             Ok(())
         }
     }
-}
-
-#[derive(Accounts)]
-pub struct Initialize {}
-
-#[account]
-pub struct UserStats {
-    name: String,
-    public_key: Pubkey,
-    kudos_received: u64,
-    kudos_given: u64,
-    bump: u8
-}
-
-#[derive(Accounts)]
-pub struct CreateUserStats<'info> {
-    #[account(mut)]
-    pub user: Signer<'info>,
-    
-    // Space:   8 discriminator 
-    //        + 64 name
-    //        + 32 public key 
-    //        + 8 kudos tx 
-    //        + 8 kudos rx 
-    //        + 1 bump
-    #[account(
-        init,
-        payer = user,
-        space = 8 + 64 + 32 + 8 + 8 + 1,
-        seeds = [SEED_PHRASE, user.key().as_ref()],
-        bump
-    )]
-    pub user_stats: Account<'info, UserStats>,
-    pub system_program: Program<'info, System>,
-}
-
-#[derive(Accounts)]
-pub struct GiveKudos<'info> {
-    #[account(mut)]
-    pub kudos_sender: Signer<'info>,
-    /// CHECK: This is not dangerous because we don't read or write from this account
-    #[account(
-        mut,
-        constraint = kudos_sender.to_account_info().key() != kudos_receiver.key() // Don't allow people to send themselves kudos.
-    )]
-    pub kudos_receiver: AccountInfo<'info>,
-
-    #[account(
-        mut,
-        seeds = [SEED_PHRASE, kudos_receiver.key().as_ref()],
-        bump = receiver_stats.bump
-    )]
-    pub receiver_stats: Account<'info, UserStats>,
-
-    #[account(
-        mut,
-        seeds = [SEED_PHRASE, kudos_sender.key().as_ref()],
-        bump = sender_stats.bump
-    )]
-    pub sender_stats: Account<'info, UserStats>,
 }
