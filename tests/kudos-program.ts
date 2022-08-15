@@ -149,7 +149,7 @@ describe("kudos-program", () => {
 
     // Add your test here.
     const tx = await program.methods
-        .giveKudos(new anchor.BN(20))
+        .giveKudos(new anchor.BN(10))
         .accounts({
           kudosSender: userWallet.publicKey,
           kudosReceiver: userWallet.publicKey,
