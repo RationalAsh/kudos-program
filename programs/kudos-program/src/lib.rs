@@ -21,6 +21,7 @@ pub mod kudos_program {
         user_stats.kudos_received = 0;
         user_stats.kudos_given = 0;
         user_stats.bump = pda_bump;
+        user_stats.public_key = *ctx.accounts.user.key;
         
         Ok(())
     }
@@ -43,6 +44,7 @@ pub struct Initialize {}
 #[account]
 pub struct UserStats {
     name: String,
+    public_key: Pubkey,
     kudos_received: u64,
     kudos_given: u64,
     bump: u8
@@ -53,11 +55,16 @@ pub struct CreateUserStats<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
     
-    // Space: 8 discriminator + 64 name + 8 kudos tx + 8 kudos rx + 1 bump
+    // Space: 8 discriminator 
+    //        + 64 name
+    //        + 32 public key 
+    //        + 8 kudos tx 
+    //        + 8 kudos rx 
+    //        + 1 bump
     #[account(
         init,
         payer = user,
-        space = 8 + 64 + 8 + 8 + 1,
+        space = 8 + 64 + 32 + 8 + 8 + 1,
         seeds = [SEED_PHRASE, user.key().as_ref()],
         bump
     )]
