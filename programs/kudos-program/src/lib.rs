@@ -35,6 +35,14 @@ pub mod kudos_program {
         Ok(())
     }
 
+    pub fn update_name(ctx: Context<UpdateName>, new_name: String) -> ProgramResult {
+        if new_name.as_bytes().len() > 200 {
+            panic!();
+        }
+        ctx.accounts.user_stats.name = new_name;
+        Ok(())
+    }
+
     pub fn give_kudos(ctx: Context<GiveKudos>, amount: u64, ) -> ProgramResult {
         if amount > 10 {
             msg!("Given Kudos too high!! > 10");
