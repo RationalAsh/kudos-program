@@ -26,11 +26,6 @@ pub mod kudos_program {
             0,
             pda_bump
         );
-        // user_stats.name = name;
-        // user_stats.kudos_received = 0;
-        // user_stats.kudos_given = 0;
-        // user_stats.bump = pda_bump;
-        // user_stats.public_key = *ctx.accounts.user.key;
         
         Ok(())
     }
@@ -39,7 +34,7 @@ pub mod kudos_program {
         if new_name.as_bytes().len() > 200 {
             panic!();
         }
-        ctx.accounts.user_stats.name = new_name;
+        ctx.accounts.user_stats.set_name(new_name);
         Ok(())
     }
 
