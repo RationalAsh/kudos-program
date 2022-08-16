@@ -38,7 +38,7 @@ pub mod kudos_program {
         Ok(())
     }
 
-    pub fn give_kudos(ctx: Context<GiveKudos>, amount: u64, ) -> ProgramResult {
+    pub fn give_kudos(ctx: Context<GiveKudos>, amount: u64) -> ProgramResult {
         if amount > 10 {
             msg!("Given Kudos too high!! > 10");
             Err(ProgramError::InvalidInstructionData)
@@ -47,5 +47,18 @@ pub mod kudos_program {
             ctx.accounts.sender_stats.kudos_given += amount;
             Ok(())
         }
+    }
+
+    pub fn close_user_stats(
+        ctx: Context<CloseUserStats>, 
+        zero_kudos: bool) -> ProgramResult {
+        
+        if zero_kudos {
+            ctx.accounts.user_stats.kudos_given = 0;
+            ctx.accounts.user_stats.kudos_received = 0;
+            ctx.accounts.user_stats.name = String::new();
+        }
+
+        Ok(())
     }
 }
