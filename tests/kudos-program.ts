@@ -262,6 +262,9 @@ describe("kudos-program", () => {
         assert.ok(item.account.owner.toBase58() === programAddress.toBase58());
       })
 
+      const res2 = await program.account.userStats.fetch(userStatsPDA);
+      console.log(res2);
+
     // assert.ok(paccs.length === 2);
   })
 });

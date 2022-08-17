@@ -14,4 +14,5 @@ pub struct CloseUserStats<'info> {
         close = user
     )]
     pub user_stats: Account<'info, UserStats>,
+    pub system_program: Program<'info, System>,
 }
