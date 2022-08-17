@@ -235,7 +235,7 @@ describe("kudos-program", () => {
     )
 
     // Send instruction to close the account.
-    const tx = program.methods
+    const tx = await program.methods
         .closeUserStats(true)
         .accounts({
           user: userWallet.publicKey,
@@ -243,28 +243,28 @@ describe("kudos-program", () => {
         })
         .signers([userWallet])
         .rpc();
+      console.log(tx);
+  })
 
-      // Get the accounts and check if the accounts are still there?
-      const programAddress = new PublicKey("FrR535wDsm4PUEU41ipJRMWYJj4bMoQX6GPqiKfQdgzU")
-      const paccs = await provider.connection.getProgramAccounts(
-        programAddress
-      )
-      paccs ? console.log(paccs) : console.log("Empty result??")
-      paccs?.forEach((item, index) => {
-        console.log("----------------");
-        console.log("Account %d", index);
-        console.log("----------------");
-        console.log("Address : ", item.pubkey.toBase58());
-        console.log("Owner   : ", item.account.owner.toBase58());
-        console.log("Data    : %d bytes.", item.account.data.length);
-        console.log("----------------\n");
-  
-        assert.ok(item.account.owner.toBase58() === programAddress.toBase58());
-      })
+  it("Checking if PDAs can be found post deletion.", async () => {
+    const programAddress = new PublicKey("FrR535wDsm4PUEU41ipJRMWYJj4bMoQX6GPqiKfQdgzU")
+    const paccs = await provider.connection.getProgramAccounts(
+      programAddress
+    )
+    paccs ? console.log(paccs) : console.log("Empty result??")
+    paccs?.forEach((item, index) => {
+      console.log("----------------");
+      console.log("Account %d", index);
+      console.log("----------------");
+      console.log("Address : ", item.pubkey.toBase58());
+      console.log("Owner   : ", item.account.owner.toBase58());
+      console.log("Data    : %d bytes.", item.account.data.length);
+      console.log("----------------\n");
 
-      const res2 = await program.account.userStats.fetch(userStatsPDA);
-      console.log(res2);
+      assert.ok(item.account.owner.toBase58() === programAddress.toBase58());
+    })
 
     // assert.ok(paccs.length === 2);
   })
+
 });
