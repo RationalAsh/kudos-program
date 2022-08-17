@@ -225,4 +225,43 @@ describe("kudos-program", () => {
 
     // assert.ok(paccs.length === 2);
   })
+
+  it("De-initializing an account.", async () => {
+    // Create a PDA
+    const [userStatsPDA, pda_bump] = await PublicKey.findProgramAddress(
+      [ anchor.utils.bytes.utf8.encode(SEED_PHRASE),
+        userWallet.publicKey.toBuffer() ],
+        program.programId
+    )
+
+    // Send instruction to close the account.
+    const tx = program.methods
+        .closeUserStats(true)
+        .accounts({
+          user: userWallet.publicKey,
+          userStats: userStatsPDA,
+        })
+        .signers([userWallet])
+        .rpc();
+
+      // Get the accounts and check if the accounts are still there?
+      const programAddress = new PublicKey("FrR535wDsm4PUEU41ipJRMWYJj4bMoQX6GPqiKfQdgzU")
+      const paccs = await provider.connection.getProgramAccounts(
+        programAddress
+      )
+      paccs ? console.log(paccs) : console.log("Empty result??")
+      paccs?.forEach((item, index) => {
+        console.log("----------------");
+        console.log("Account %d", index);
+        console.log("----------------");
+        console.log("Address : ", item.pubkey.toBase58());
+        console.log("Owner   : ", item.account.owner.toBase58());
+        console.log("Data    : %d bytes.", item.account.data.length);
+        console.log("----------------\n");
+  
+        assert.ok(item.account.owner.toBase58() === programAddress.toBase58());
+      })
+
+    // assert.ok(paccs.length === 2);
+  })
 });
