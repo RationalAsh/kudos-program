@@ -243,7 +243,7 @@ describe("kudos-program", () => {
         })
         .signers([userWallet])
         .rpc();
-      console.log(tx);
+      console.log("Close account transaction signature: ", tx);
   })
 
   it("Checking if PDAs can be found post deletion.", async () => {
