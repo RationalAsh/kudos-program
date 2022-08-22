@@ -5,7 +5,7 @@ pub const VERSION_NUMBER: u64 = 3;
 
 #[account]
 pub struct UserStats {
-    pub version: u64,
+    pub version: u64,         // Account data version.
     pub name: String,         // Name of the registered user.
     pub public_key: Pubkey,   // Public key of the registered user's wallet.
     pub kudos_received: u64,  // Kudos received by the registered user.
