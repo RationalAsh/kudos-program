@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-pub const SEED_PHRASE: &[u8] = b"kudos-stats";
+pub const SEED_PHRASE: &[u8] = b"kudos-stats-v0.2";
 
 #[account]
 pub struct UserStats {
