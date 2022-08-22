@@ -6,7 +6,7 @@ import { PublicKey, SystemProgram, Keypair } from '@solana/web3.js';
 import { assert } from "chai";
 
 
-const SEED_PHRASE = "kudos-stats-v0.2"
+const SEED_PHRASE = "kudos-stats-v0.3"
 
 describe("kudos-program", () => {
   // Configure the client to use the local cluster.

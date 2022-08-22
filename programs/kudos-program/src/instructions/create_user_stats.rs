@@ -9,6 +9,7 @@ pub struct CreateUserStats<'info> {
     pub user: Signer<'info>,
     
     // Space:   8 discriminator 
+    //        + 8 version number
     //        + 64 name
     //        + 32 public key 
     //        + 8 kudos tx 
@@ -17,7 +18,7 @@ pub struct CreateUserStats<'info> {
     #[account(
         init,
         payer = user,
-        space = 8 + 64 + 32 + 8 + 8 + 1,
+        space = 8 + 8 + 64 + 32 + 8 + 8 + 1,
         seeds = [SEED_PHRASE, user.key().as_ref()],
         bump
     )]

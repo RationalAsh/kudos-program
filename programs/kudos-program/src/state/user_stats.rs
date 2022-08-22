@@ -1,9 +1,11 @@
 use anchor_lang::prelude::*;
 
-pub const SEED_PHRASE: &[u8] = b"kudos-stats-v0.2";
+pub const SEED_PHRASE: &[u8] = b"kudos-stats-v0.3";
+pub const VERSION_NUMBER: u64 = 3;
 
 #[account]
 pub struct UserStats {
+    pub version: u64,
     pub name: String,         // Name of the registered user.
     pub public_key: Pubkey,   // Public key of the registered user's wallet.
     pub kudos_received: u64,  // Kudos received by the registered user.
@@ -20,6 +22,7 @@ impl UserStats {
         kudos_given: u64,
         bump: u8
     ) {
+        self.version = VERSION_NUMBER;
         self.name = name;
         self.public_key = public_key;
         self.kudos_received = kudos_received;
